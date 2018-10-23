@@ -1,5 +1,7 @@
 # front-end
 
+The front-end of visual DS.
+
 ## Project setup
 ```
 npm install
