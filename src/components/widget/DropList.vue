@@ -53,7 +53,8 @@ export default {
   data () {
     return {
       activeName: '',
-      initVar: [],
+      initVar: {},
+      processInitVar: {},
       height: this.initHeight,
       width: this.initWidth,
       activeId: -1,
@@ -79,23 +80,8 @@ export default {
     runAlgo: function() {
       const e = {
         algorithm_id: this.activeId,
-        initVar: this.initVar,
+        initVar: this.processInitVar,
       };
-      this.items[this.activeIndex[0]]['algorithms'][this.activeIndex[1]].initVar.forEach(element => {
-        switch (element.type) {
-          case 'Number':
-            '请输入一个数字...';
-            break;
-          case 'String':
-            '请输入一串字符...';
-            break;
-          case 'Array':
-            '请输入一个数组，用英文逗号隔开...';
-            break;
-          default:
-            break;
-        }
-      });
       this.$emit('run-algo', e);
       this.activeId = -1;
       this.items[this.activeIndex[0]]['algorithms'][this.activeIndex[1]]['show'] = false;
@@ -114,18 +100,29 @@ export default {
       }
     },
     changeType: function(varName, type) {
-      console.log(this.initVar[varName], type);
-      this.initVar[varName] = this.changeToNumber(this.initVar[varName]);
-      console.log(this.initVar[varName]);
+      switch (type) {
+        case 'Number':
+          this.processInitVar[varName] = this.changeToNumber(this.initVar[varName]);
+          this.initVar[varName] = String(this.processInitVar[varName])
+          break;
+        case 'String':
+          this.processInitVar[varName] = this.changeToString(this.initVar[varName]);
+          this.initVar[varName] = this.processInitVar[varName];
+          break;
+        case 'Array':
+          this.processInitVar[varName] = this.changeToArray(this.initVar[varName]);
+          this.initVar[varName] = this.processInitVar[varName].join(',');
+          break;
+      }
     },
     changeToNumber: function(value) {
       return Number(value) || 0;
     },
     changeToString: function(value) {
-      console.log(value);
+      return String(value) || '';
     },
     changeToArray: function(value) {
-      console.log(value);
+      return String(value).split(',').filter(item => item !== '') || [];
     },
   },
 }

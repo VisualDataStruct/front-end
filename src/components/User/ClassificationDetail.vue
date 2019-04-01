@@ -45,7 +45,17 @@ export default {
   },
   methods: {
     runAlgo(event) {
-      console.log(event);
+      this.initVar = event.initVar;
+      this.$http.get('classification/' + this.classification_id + '/algorithm/' + event.algorithm_id)
+      .then(r => {
+        console.log(r.data);
+        this.codeJson = r.data.blocksJson || '{"code":[{}],"_var":{},"_sp_var":{}}';
+      })
+      .catch(e => {
+        console.error(e)
+      })
+      console.log(this.initVar)
+      console.log(event.initVar);
     },
     getClassification() {
       this.$http.get('classification/' + this.classification_id + '/algorithm')

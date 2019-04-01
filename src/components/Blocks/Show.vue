@@ -118,7 +118,6 @@ export default {
     Bus.on('changeComment', (commentId) => {
       // console.log(commentId[0])
       this.nowCommentId = commentId[0];
-      console.log(this.nowCommentId)
     });
   },
   methods: {
@@ -129,6 +128,7 @@ export default {
       this.stepSum = this.run.allStep;
       this.commentList = this.run.getComment();
       console.log(this.commentList)
+      console.log(this.run.varSet)
     },
     jump: function(step) {
       this.playStatus = 'pause';

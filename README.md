@@ -1,5 +1,18 @@
 # front-end
 
+## clone
+
+```
+git clone --recursive https://github.com/VisualDataStruct/front-end.git
+```
+
+## update
+
+```
+git pull
+git submodule update
+```
+
 ## Project setup
 ```
 npm install
