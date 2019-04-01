@@ -1,0 +1,10 @@
+module.exports = {
+  dev: {
+    host: 'http://localhost',
+    port: 4400, // local port for webpack-server
+  },
+  api: { // api proxy
+    host: 'http://vds.qiankaihua.top', // api host
+    prefix: 'api'
+  }
+}
