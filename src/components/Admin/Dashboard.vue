@@ -36,7 +36,6 @@ export default {
   created: function() {
     this.$http.get('user/' + this.$store.state.authUser, this.$store.state.getConfig)
     .then(r => {
-      console.log(r.data);
       this.user = r.data
     })
     .catch(e => {
@@ -68,7 +67,6 @@ export default {
             const algorithmList = res.data.algorithms;
             this.algorithmCount += algorithmList.length;
             algorithmList.forEach(algorithm => {
-              console.log(algorithm.passed)
               if (classification['deleted_at'] || algorithm['deleted_at']) {
                 ++this.algorithmDeletedCount;
               }
