@@ -54,10 +54,10 @@ export default {
         return '{"code":[{}],"_var":{},"_sp_var":{}}';
       }
     },
-    initVar: {
-      type: Object,
+    initVarString: {
+      type: String,
       default: function() {
-        return {};
+        return '{}';
       }
     }
   },
@@ -74,7 +74,6 @@ export default {
       globalData: [{}],
       nodeData: [{}],
       nodeId: -1,
-      // nowStep: 0,
       stepSum: 100,
       playStatus: 'pause',
       run: new Run(this.runCode),
@@ -83,6 +82,9 @@ export default {
     }
   },
   computed: {
+    initVar: function() {
+      return JSON.parse(this.initVarString)
+    },
     nowStep: function() {
       return this.run.step;
     },
@@ -102,7 +104,6 @@ export default {
         this.run = new Run(newVal);
         this.initRun();
       },
-      deep: false,
     },
     nowStep: {
       handler(newVal) {
@@ -110,13 +111,19 @@ export default {
           this.playStatus = 'end';
         }
       }
-    }
+    },
+    initVarString: {
+      handler(newVal) {
+        this.run.clear();
+        this.run = new Run(this.runCode);
+        this.initRun();
+      },
+    },
   },
   mounted() {
     InitShow.initAll(this.height, this.width);
     this.initRun();
     Bus.on('changeComment', (commentId) => {
-      // console.log(commentId[0])
       this.nowCommentId = commentId[0];
     });
   },
@@ -127,8 +134,6 @@ export default {
       this.run.compile();
       this.stepSum = this.run.allStep;
       this.commentList = this.run.getComment();
-      console.log(this.commentList)
-      console.log(this.run.varSet)
     },
     jump: function(step) {
       this.playStatus = 'pause';

@@ -19,12 +19,16 @@ export default {
     return {
       List: [
         {
-          title: 'about',
+          title: 'Home',
+          link: '/',
+        },
+        {
+          title: 'About',
           link: 'javascript:void(0);',
         },
         {
-          title: 'admin',
-          link: '/',
+          title: 'Admin',
+          link: '/admin',
         },
       ],
     }

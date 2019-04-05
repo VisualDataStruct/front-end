@@ -14,8 +14,15 @@ export default {
     iFooter,
   },
   beforeMount: function () {
-    this.$store.commit('SET_API_TOKEN', localStorage.token === undefined ? '' : JSON.parse(localStorage.token))
-    this.$store.commit('SET_AUTH_USER', localStorage.authUser === undefined ? '' : JSON.parse(localStorage.authUser))
+    this.$store.commit('SET_API_TOKEN', localStorage.token === undefined ? '' : localStorage.token)
+    this.$store.commit('SET_AUTH_USER', localStorage.authUser === undefined ? '' : localStorage.authUser)
+    this.$store.commit('SET_GET_CONFIG', { params: { token: this.$store.state.token } })
+    this.$store.commit('SET_POST_CONFIG', {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Api-Token': this.$store.state.token
+      }
+    })
   },
   data () {
     return {

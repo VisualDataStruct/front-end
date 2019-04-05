@@ -37,17 +37,17 @@ export default {
     };
   },
   watch: {
-    comments: {
-      handler (newVar, oldVar) {
-        console.log(newVar, oldVar);
-      },
-      deep: true,
-    },
-    commentId: {
-      handler (newVar) {
-        console.log(newVar);
-      }
-    }
+    // comments: {
+    //   handler (newVar, oldVar) {
+    //     console.log(newVar, oldVar);
+    //   },
+    //   deep: true,
+    // },
+    // commentId: {
+    //   handler (newVar) {
+    //     console.log(newVar);
+    //   }
+    // }
   },
   methods: {
   },

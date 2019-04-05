@@ -4,11 +4,15 @@
       <h1 id="title">
         {{ classification.name }}
       </h1>
+      <el-button
+        type="primary"
+        v-on:click="$router.push({ name: 'Index' })"
+        class="back"
+      >返回首页</el-button>
       <Show
-        :height="600"
-        :width="1200"
+        id="animation-show"
         :runCode="codeJson"
-        :initVar="initVar"
+        :initVarString="initVarString"
       ></Show>
       <DropList
         class="algorithms"
@@ -33,8 +37,9 @@ export default {
       algorithms: [],
       classification: [],
       dropListData: [],
-      initVar: {},
+      // initVar: {},
       codeJson: '{"code":[{}],"_var":{},"_sp_var":{}}',
+      initVarString: '{}',
     }
   },
   computed: {
@@ -45,17 +50,15 @@ export default {
   },
   methods: {
     runAlgo(event) {
-      this.initVar = event.initVar;
+      // this.initVar = event.initVar;
+      this.initVarString = JSON.stringify(event.initVar);
       this.$http.get('classification/' + this.classification_id + '/algorithm/' + event.algorithm_id)
       .then(r => {
-        console.log(r.data);
         this.codeJson = r.data.blocksJson || '{"code":[{}],"_var":{},"_sp_var":{}}';
       })
       .catch(e => {
         console.error(e)
       })
-      console.log(this.initVar)
-      console.log(event.initVar);
     },
     getClassification() {
       this.$http.get('classification/' + this.classification_id + '/algorithm')
@@ -65,7 +68,6 @@ export default {
           name: r.data.name,
           description: r.data.description,
         };
-        console.log(r.data.algorithms);
         this.getShowData();
       })
       .catch(e => {
@@ -77,20 +79,19 @@ export default {
       const data = [];
       this.algorithms.forEach(algo => {
         if (!(tag[algo.tagName] > 0)) {
-          tag[algo.tagName] = data.length;
           data.push({
             'tag': algo.tagName,
             'algorithms': [],
           });
+          tag[algo.tagName] = data.length;
         }
-        data[tag[algo.tagName]].algorithms.push({
+        data[tag[algo.tagName] - 1].algorithms.push({
           'id': algo.id,
           'name': algo.name,
           'initVar': algo.initVar,
           'show': false,
         });
       });
-      console.log(data);
       this.dropListData = data;
     }
   },
@@ -98,6 +99,10 @@ export default {
 </script>
 
 <style scoped>
+  #animation-show {
+    left: 100px;
+    position: relative;
+  }
   #classification {
     min-height: 100vh;
   }
@@ -124,5 +129,10 @@ export default {
     bottom: 50px;
     left: 20px;
     min-width: 100px;
+  }
+  .back {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 </style>

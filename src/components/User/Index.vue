@@ -20,7 +20,8 @@
             <div class="card-body">
               <el-row :gutter="30">
                 <el-col :span="12">
-                  <img class="cover" :src="'/api/' + List[(n - 1) * 2].cover">
+                  <span v-if="!List[(n - 1) * 2].cover">暂无封面图</span>
+                  <img v-else class="cover" :src="'/api/' + List[(n - 1) * 2].cover">
                 </el-col>
                 <el-col :span="12">
                   <div class="description">
@@ -43,10 +44,17 @@
               <span>{{ List[(n - 1) * 2 + 1].name }}</span>
             </div>
             <div class="card-body">
-              <img class="cover" :src="'/api/' + List[(n - 1) * 2 + 1].cover">
-              <div class="description">
-                {{ List[(n - 1) * 2 + 1].description }}
-              </div>
+              <el-row :gutter="30">
+                <el-col :span="12">
+                  <span v-if="!List[(n - 1) * 2 + 1].cover">暂无封面图</span>
+                  <img v-else class="cover" :src="'/api/' + List[(n - 1) * 2 + 1].cover">
+                </el-col>
+                <el-col :span="12">
+                  <div class="description">
+                    {{ List[(n - 1) * 2 + 1].description }}
+                  </div>
+                </el-col>
+              </el-row>
             </div>
           </el-card>
         </el-col>
@@ -96,7 +104,7 @@ export default {
 
 <style scoped>
   #index {
-    height: 1000px;
+    min-height: 1000px;
   }
   #title {
     padding-top: 50px;
