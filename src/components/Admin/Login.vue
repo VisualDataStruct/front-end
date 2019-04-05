@@ -29,7 +29,7 @@
             <el-checkbox v-model="ruleForm.checked" label="保持登录状态30天"></el-checkbox>
           </el-form-item>
           <el-form-item>
-            <el-button round type="primary" @click="submitForm('ruleForm2')">提交</el-button>
+            <el-button round type="primary" @click="submitForm()">提交</el-button>
             <el-button round type="primary" @click="switchLogin()">切换登录方式</el-button>
           </el-form-item>
         </el-form>
