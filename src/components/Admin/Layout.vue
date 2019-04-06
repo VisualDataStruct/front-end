@@ -82,11 +82,11 @@ export default {
           routerName: { name: 'AdminClassificationList' },
         },
         {
+          title: '添加用户',
+          index: 'AdminAddUser',
           needAdmin: true,
-          title: '用户管理',
-          index: 'tmpAdminUserManager',
-          disabled: true,
-          routerName: { name: 'tmpAdminUserManager' },
+          disabled: false,
+          routerName: { name: 'AdminAddUser' },
         }
       ],
       user: {},

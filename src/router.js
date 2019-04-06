@@ -36,7 +36,12 @@ export default new Router({
           path: 'classification/:classificationId/algorithm/:algorithmId?/edit',
           name: 'AlgorithmEdit',
           component: () => import('./components/Admin/AlgorithmEdit.vue')
-        }
+        },
+        {
+          path: 'user/add',
+          name: 'AdminAddUser',
+          component: () => import('./components/Admin/AddUser.vue')
+        },
       ],
     },
     {
