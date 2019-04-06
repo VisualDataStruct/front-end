@@ -30,11 +30,34 @@
           </el-form-item>
           <el-form-item>
             <el-button round type="primary" @click="submitForm()">提交</el-button>
-            <el-button round type="primary" @click="switchLogin()">切换登录方式</el-button>
+            <el-button round @click="switchLogin()">切换登录方式</el-button>
+            <el-button round @click="showForgotPassword()">忘记密码</el-button>
           </el-form-item>
         </el-form>
       </el-card>
     </div>
+    <el-dialog
+      title="忘记密码"
+      :visible.sync="showForgot"
+      width="600px"
+      :before-close="handleClose">
+        <el-form
+          :model="forgotForm"
+          status-icon
+          label-position="right"
+          :rules="forgotRoles"
+          ref="forgotForm"
+          label-width="100px"
+        >
+          <el-form-item label="邮箱" prop="email">
+            <el-input v-model="forgotForm.email" autocomplete="off"></el-input>
+          </el-form-item>
+        </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="clickClose()">取 消</el-button>
+        <el-button type="primary" @click="forgotPassword()">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -81,6 +104,16 @@ export default {
         ],
       },
       isEmail: false,
+      showForgot: false,
+      forgotForm: {
+        email: '',
+      },
+      forgotRoles: {
+        email: [
+          { required: true, message: '请输入邮箱', trigger: 'blur' },
+          { type: 'email', message: '不合法的邮箱格式', trigger: 'blur' },
+        ]
+      },
     };
   },
   beforeCreate: function() {
@@ -158,6 +191,45 @@ export default {
     },
     switchLogin: function() {
       this.isEmail = !this.isEmail;
+    },
+    showForgotPassword: function() {
+      this.showForgot = true;
+    },
+    forgotPassword: function() {
+      console.log(this.forgotForm.email)
+      this.$refs.forgotForm.validate((valid, notValid) => {
+        if (valid) {
+          const formData = new FormData();
+          formData.append('email', this.forgotForm.email);
+          this.$http.post('auth/forget', formData, this.$store.state.postConfig)
+          .then(r => {
+            this.$notify.success({
+              title: '重置成功',
+              message: '请查看邮件获取验证码'
+            });
+            this.$router.push({ name: 'AdminResetPassword' })
+          })
+          .catch(e => {
+            console.error(e)
+            switch(e.response.status) {
+              case 404:
+                this.$notify.error({
+                  title: '错误',
+                  message: '用户未注册',
+                });
+            }
+          })
+        } else {
+          console.error(notValid);
+          return false;
+        }
+      });
+    },
+    handleClose: function(done) {
+      done();
+    },
+    clickClose: function() {
+      this.showForgot = false
     },
   },
 }

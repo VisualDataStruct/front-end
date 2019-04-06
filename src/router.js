@@ -48,6 +48,11 @@ export default new Router({
       path: '/admin/login',
       name: 'AdminLogin',
       component: () => import('./components/Admin/Login.vue')
+    },
+    {
+      path: '/admin/reset',
+      name: 'AdminResetPassword',
+      component: () => import('./components/Admin/ResetPassword.vue')
     }
   ]
 })
