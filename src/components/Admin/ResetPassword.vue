@@ -75,13 +75,6 @@ export default {
         callback();
       }
     };
-    const validateUsername = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入用户名'));
-      } else {
-        callback();
-      }
-    }
     return {
       ruleForm: {
         email: '',
@@ -121,7 +114,7 @@ export default {
           formData.append('new_password', hash.digest('HEX'));
           formData.append('verify', this.ruleForm.valid);
           this.$http.post('auth/reset', formData, this.$store.state.postConfig)
-          .then(r => {
+          .then(() => {
             this.$notify.success({
               title: '重设密码成功',
             });

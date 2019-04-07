@@ -202,7 +202,7 @@ export default {
           const formData = new FormData();
           formData.append('email', this.forgotForm.email);
           this.$http.post('auth/forget', formData, this.$store.state.postConfig)
-          .then(r => {
+          .then(() => {
             this.$notify.success({
               title: '重置成功',
               message: '请查看邮件获取验证码'

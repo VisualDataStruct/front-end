@@ -103,7 +103,7 @@ export default {
           formData.append('github', this.ruleForm.github || '');
           formData.append('phone', this.ruleForm.phone || '');
           this.$http.post('user/add', formData, this.$store.state.postConfig)
-          .then(r => {
+          .then(() => {
             this.$notify.success({
               title: '添加成功',
             });
@@ -117,12 +117,12 @@ export default {
           })
           .catch(e => {
             console.error(e)
+            let errorMsg = '';
             switch(e.response.status) {
               case 422:
-                let errorMsg = '';
+                errorMsg = '';
                 for (const key in e.response.data) {
                   if (e.response.data.hasOwnProperty(key)) {
-                    const element = e.response.data[key];
                     errorMsg += e.response.data[key][0];
                   }
                 }
@@ -132,10 +132,12 @@ export default {
                 this.$notify.error({
                   title: '请先登录',
                 });
+                break;
               case 403:
                 this.$notify.error({
                   title: '您没有权限',
                 });
+                break;
             }
           })
         } else {

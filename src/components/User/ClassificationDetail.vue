@@ -11,6 +11,8 @@
       >返回首页</el-button>
       <Show
         id="animation-show"
+        :height="600"
+        :width="1000"
         :runCode="codeJson"
         :initVarString="initVarString"
       ></Show>
@@ -100,8 +102,9 @@ export default {
 
 <style scoped>
   #animation-show {
-    left: 100px;
+    left: calc(50% - 500px);
     position: relative;
+    margin-top: 50px;
   }
   #classification {
     min-height: 100vh;

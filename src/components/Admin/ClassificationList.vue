@@ -47,8 +47,8 @@
       </el-table-column>
       <el-table-column
         prop="sum"
-        label="包含算法数"
-        width="100px"
+        label="包含算法数(已通过)"
+        width="150px"
       ></el-table-column>
       <el-table-column
         label="操作"
