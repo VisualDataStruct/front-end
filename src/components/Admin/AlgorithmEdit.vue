@@ -203,6 +203,7 @@ export default {
       )
       .then(r => {
         this.algorithm = r.data
+        this.algorithm.initVar = this.algorithm.initVar;
         this.inputXml();
       })
       .catch(e => {
@@ -342,11 +343,10 @@ export default {
       })
     },
     trueAdd: function() {
-      console.log('add');
       const formData = new FormData();
       formData.append('blocksJson', this.algorithm.blocksJson)
       formData.append('blocksXml', this.algorithm.blocksXml)
-      formData.append('initVar', this.algorithm.initVar)
+      formData.append('initVar', JSON.stringify(this.algorithm.initVar));
       formData.append('name', this.algorithm.name)
       formData.append('tagName', this.algorithm.tagName)
       this.$http.post('classification/' + this.classificationId + '/algorithm', formData, this.$store.state.postConfig)
