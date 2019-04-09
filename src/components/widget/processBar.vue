@@ -42,12 +42,22 @@ export default {
   },
   mounted: function() {
     const dom = document.getElementById('process-bar');
+    console.log(dom);
     if (dom !== undefined) {
       this.width = dom.offsetWidth;
     }
+    console.log(this.width)
   },
   methods: {
     jump: function (event) {
+      const dom = document.getElementById('process-bar');
+      console.log(dom);
+      if (dom !== undefined) {
+        this.width = dom.offsetWidth;
+      }
+      if (this.width === 0) {
+        return;
+      }
       this.$emit('change-position', Math.round(event.layerX / this.width * this.stepCount));
     }
   }

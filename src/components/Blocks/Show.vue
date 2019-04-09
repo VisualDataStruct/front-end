@@ -136,6 +136,7 @@ export default {
       this.commentList = this.run.getComment();
     },
     jump: function(step) {
+      console.log(step)
       this.playStatus = 'pause';
       this.run.jumpTo(step);
     },
