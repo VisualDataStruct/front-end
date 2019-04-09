@@ -87,7 +87,7 @@ export default {
     window.onload = this.getToolBox();
     this.demoWorkspace = this.Blockly.inject('blocklyDiv',
         {
-          // media: './media/',
+          media: '/static/blockly/media/',
           toolbox: document.getElementById('toolbox')
         });
   },
